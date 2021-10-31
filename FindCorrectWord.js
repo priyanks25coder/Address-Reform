@@ -7,7 +7,7 @@ class FindCorrectWord {
 
     static #fuzzyObj;
 
-    static async initDictonary(pinCode) {
+    static async initDictonary() {
         const dict = await SpellChecker.getDictionarySync('tokens', '.');
         FindCorrectWord.#fuzzyObj = new FuzzyMatching(dict.wordlist);
     }
