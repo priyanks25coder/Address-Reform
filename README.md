@@ -27,10 +27,9 @@ We needed to develop and API that takes address in RAW format (input), and perfo
 ### How to Run?
 After cloning the repo, follow the below steps:
 ```sh
-$ cd groww_chatbot 
-$ pip install -r requirements.txt
-$ python -m spacy download en
-$ python manage.py runserver
+$ cd (repo path) 
+$ npm install
+$ node index.js
 ```
 
 ### Mentions
