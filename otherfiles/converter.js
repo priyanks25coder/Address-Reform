@@ -17,15 +17,9 @@ module.exports = {
             row = row.split(',');
             if (!!!json_obj[row[1]]) json_obj[row[1]] = [];
             json_obj[row[1]].push({
-                office: row[0],
-                division: row[4],
-                region: row[5],
-                circle: row[6],
-                taluka: row[7],
+                subdistrict: row[7],
                 district: row[8],
                 state: row[9],
-                suboffice: row[11],
-                headoffice: row[12],
             });
         });
 
