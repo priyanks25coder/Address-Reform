@@ -70,7 +70,7 @@ class Address {
 		addrObj["district"] = Address.getCorrectWords(addrObj["district"]);
 		addrObj["state"] = Address.getCorrectWords(addrObj["state"]);
 
-		return addrObj;
+		return Address.removeEndCommaAndSpecialChars(addrObj);
 	}
 
 	removeDuplicates(addrObj) {
