@@ -113,7 +113,6 @@ class Address {
 	fillEmpty(addrObj) {
 		if (addrObj.pincode != "") {
 			const respobj = tokens_pincodewise[addrObj.pincode][0];
-            
 			if (addrObj.state == "" || addrObj.state == null) {
 				console.log("State empty", respobj.state);
 				addrObj.state = respobj.state;
