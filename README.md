@@ -1,5 +1,5 @@
 
-## Address Formatting  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Aadhaar_Logo.svg/1200px-Aadhaar_Logo.svg.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="50" height="50" />
+## Address Formatting  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Aadhaar_Logo.svg/1200px-Aadhaar_Logo.svg.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="30" height="30" />
 
 **Team ID:**  StatusCode200 | **Team Members:** Priyank Shah , Pranjal Goyal &amp; Bhuvan Gandhi
 
