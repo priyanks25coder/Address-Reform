@@ -3,6 +3,8 @@
 
 **Team ID:**  StatusCode200 | **Team Members:** Priyank Shah , Pranjal Goyal &amp; Bhuvan Gandhi
 
+![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 ### Problem Statament
 We needed to develop and API that takes address in RAW format (input), and perform formmating and optimizing the address (removing repetative, null values etc) and return the final address as a response.
