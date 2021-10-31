@@ -17,6 +17,10 @@ We needed to develop and API that takes address in RAW format (input), and perfo
 - At last used **Regex** in each fields of address to trim the extra space as well as removal of special charcter such as (@,*) etc.
 - We returned the final formatted address as JSON object.
 
+
+### Google Slide:
+https://docs.google.com/presentation/d/15NHsy8HAPtnYqiQsnKyEZ28u6_X_wqwv_jWorB3Xxb8/edit#slide=id.gf83d41c71d_0_105
+
 ### Example :
 
 > Input Address
