@@ -61,6 +61,12 @@ $ npm install
 $ node index.js
 ```
 
+## API Used
+Using an Open Source Indian Post api
+
+**PostOffice Api:** GET https://api.postalpincode.in/pincode/{PINCODE}
+
+
 ### Mentions
 
 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Aadhaar_Logo.svg/1200px-Aadhaar_Logo.svg.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="100" height="100" />
