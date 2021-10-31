@@ -40,13 +40,13 @@ class Address {
 		return missingImportantFields.length < 1;
 	}
 
-	static removeEndCommaAndSpecialChars(addrObj) {
+	static removeEndCommaAndSpecialChars(str) {
+		return str.toString().trim().replace(/,\s*$/, "").replace(/[^0-9.\-\/,\sa-zA-Z]/g, "");
+	}
+
+	static removeEndCommaAndSpecialCharsFromObject(addrObj) {
 		Object.keys(addrObj).forEach((field) => {
-			addrObj[field] = addrObj[field]
-				.toString()
-				.trim()
-				.replace(/,\s*$/, "")
-				.replace(/[^0-9.\-,\sa-zA-Z]/g, "");
+			addrObj[field] = Address.removeEndCommaAndSpecialChars(addrObj[field]);
 		});
 		return addrObj;
 	}
@@ -56,7 +56,7 @@ class Address {
 			let words = sentence.split(" ");
 
 			for (let i in words) {
-				words[i] = FindCorrectWord.getCorrectWord(words[i]);
+				words[i] = Address.removeEndCommaAndSpecialChars(FindCorrectWord.getCorrectWord(words[i]));
 			}
 			words = words.join(" ");
 			return Address.capitalizeFirstLetter(words);
@@ -70,7 +70,7 @@ class Address {
 		addrObj["district"] = Address.getCorrectWords(addrObj["district"]);
 		addrObj["state"] = Address.getCorrectWords(addrObj["state"]);
 
-		return Address.removeEndCommaAndSpecialChars(addrObj);
+		return Address.removeEndCommaAndSpecialCharsFromObject(addrObj);
 	}
 
 	removeDuplicates(addrObj) {
@@ -105,16 +105,21 @@ class Address {
 	}
 
 	fillEmpty(addrObj) {
-		if (addrObj.pincode != "") {
-			const respobj = tokens_pincodewise[addrObj.pincode][0];
-			if (!!!addrObj.state) {
-				addrObj.state = Address.capitalizeFirstLetter(respobj.state.toString().toLowerCase());
+		console.log(108, tokens_pincodewise[addrObj.pincode]);
+		console.log(109, addrObj);
+		if (!!addrObj.pincode && !!tokens_pincodewise[addrObj.pincode]) {
+
+			const respObj = tokens_pincodewise[addrObj.pincode][0];
+
+			if (!!!addrObj.state || addrObj.state == 'NA') {
+				console.log(114);
+				addrObj.state = Address.capitalizeFirstLetter(respObj.state.toString().toLowerCase());
 			}
-			if (!!!addrObj.district) {
-				addrObj.district = Address.capitalizeFirstLetter(respobj.district);
+			if (!!!addrObj.district || addrObj.district == 'NA') {
+				addrObj.district = Address.capitalizeFirstLetter(respObj.district);
 			}
-			if (!!!addrObj.subdistrict) {
-				addrObj.subdistrict = Address.capitalizeFirstLetter(respobj.taluka);
+			if (!!!addrObj.subdistrict || addrObj.subdistrict == 'NA') {
+				addrObj.subdistrict = Address.capitalizeFirstLetter(respObj.taluka);
 			}
 		}
 		return addrObj;
@@ -129,7 +134,7 @@ class Address {
 	}
 
 	getFinalAddress() {
-        this.#address = Address.removeEndCommaAndSpecialChars(this.#address);
+        this.#address = Address.removeEndCommaAndSpecialCharsFromObject(this.#address);
         this.#address = this.correctSpellingMistakes(this.#address);
         this.#address = this.fillEmpty(this.#address);
         this.#address = this.removeDuplicates(this.#address);
