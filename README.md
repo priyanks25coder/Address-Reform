@@ -13,7 +13,7 @@ We needed to develop and API that takes address in RAW format (input), and perfo
 - First of all we looked into serveal string matching algorithm, and decided to use the **Levenshtein distance Algorithm**.
 - The algorithm calculates the minimum number of single-character edits required to change one word into the other. Strings do not have to be the same length
 - After this, we solved the mispelling problem in fields by the use of **Fuzzy string matching** on fields that are standarized such as State, District.
-- Now at last in order to solve the problem of null/empty values in field, we decided to use the **PostOffice API** which fetches the information based on pincode. We can get information regarding state, district and locality.
+- Now at last in order to solve the problem of null/empty values in field, we decided to use the **Data Govt India Pincode API** which fetches the information based on pincode. We can get information regarding state, district and locality.
 - At last used **Regex** in each fields of address to trim the extra space as well as removal of special charcter such as (@,*) etc.
 - We returned the final formatted address as JSON object.
 
@@ -64,7 +64,7 @@ $ node index.js
 ### API Used
 Using an Open Source Indian Post api
 
-**PostOffice Api:** GET https://api.postalpincode.in/pincode/{PINCODE}
+**Data Govt India Pincode Api:**: https://data.gov.in/resources/all-india-pincode-directory-along-contact-details
 
 
 ### Mentions
