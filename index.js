@@ -20,7 +20,6 @@ app.post('/', async (req, res) => {
         const addressObject = new Address(obj);
         await addressObject.enableSpellChecker(addressObject.getCurrentData().pincode);
         const finalObj = addressObject.getFinalAddress();
-        console.log(finalObj);
         res.status(200).send(finalObj).end();
     }
     catch (e) {

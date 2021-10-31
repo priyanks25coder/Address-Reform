@@ -9,15 +9,15 @@ class Address {
 		if (!!!obj) obj = {};
 
 		this.#address = {
-			house: obj.house || "",
-			street: obj.street || "",
-			area: obj.area || "",
-			landmark: obj.landmark || "",
-			village: obj.village || "",
-			subdistrict: obj.subdistrict || "",
-			district: obj.district || "",
-			state: obj.state || "",
-			pincode: obj.pincode || "",
+			house: obj.house || "NA",
+			street: obj.street || "NA",
+			area: obj.area || "NA",
+			landmark: obj.landmark || "NA",
+			village: obj.village || "NA",
+			subdistrict: obj.subdistrict || "NA",
+			district: obj.district || "NA",
+			state: obj.state || "NA",
+			pincode: obj.pincode || "NA",
 		};
 	}
 
@@ -46,13 +46,12 @@ class Address {
 				.toString()
 				.trim()
 				.replace(/,\s*$/, "")
-				.replace(/[^0-9.,\sa-zA-Z]/g, "");
+				.replace(/[^0-9.\-,\sa-zA-Z]/g, "");
 		});
 		return addrObj;
 	}
 
 	static getCorrectWords(sentence) {
-		console.log(typeof sentence);
 		if (typeof sentence == "string") {
 			let words = sentence.split(" ");
 
@@ -60,22 +59,14 @@ class Address {
 				words[i] = FindCorrectWord.getCorrectWord(words[i]);
 			}
 			words = words.join(" ");
-			return words.charAt(0).toUpperCase() + words.slice(1);
+			return Address.capitalizeFirstLetter(words);
 		}
-		console.log(sentence);
 		return sentence;
 	}
 
 	correctSpellingMistakes(addrObj) {
-		// addrObj['house'] = this.getCorrectWords(addrObj['house']);
-		// addrObj['street'] = this.getCorrectWords(addrObj['street']);
-		// addrObj['area'] = this.getCorrectWords(addrObj['area']);
-		// addrObj['landmark'] = this.getCorrectWords(addrObj['landmark']);
-
 		addrObj["landmark"] = Address.getCorrectWords(addrObj["landmark"]);
-		addrObj["subdistrict"] = Address.getCorrectWords(
-			addrObj["subdistrict"]
-		);
+		addrObj["subdistrict"] = Address.getCorrectWords(addrObj["subdistrict"]);
 		addrObj["district"] = Address.getCorrectWords(addrObj["district"]);
 		addrObj["state"] = Address.getCorrectWords(addrObj["state"]);
 
@@ -86,9 +77,9 @@ class Address {
 		let dict = {};
 		dict["district"] = addrObj.district;
 		dict["subdistrict"] = addrObj.subdistrict;
+		dict["village"] = addrObj.village;
 		dict["area"] = addrObj.area;
 		dict["landmark"] = addrObj.landmark;
-		dict["village"] = addrObj.village;
 		let values = Object.values(dict);
 		let keys = Object.keys(dict);
 
@@ -96,9 +87,8 @@ class Address {
 		keys.forEach((key, i) => {
 			values.forEach((value, i) => {
 				if (i != count) {
-					if (levenshtein(dict[key], value) <= 1) {
-						console.log(value + " mathced with " + dict[key]);
-						dict[keys[i]] = "";
+					if (levenshtein(dict[key], value) == 0) {
+						dict[keys[i]] = "NA";
 					}
 				}
 			});
@@ -110,38 +100,40 @@ class Address {
 		return addrObj;
 	}
 
+	static capitalizeFirstLetter(str) {
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+
 	fillEmpty(addrObj) {
 		if (addrObj.pincode != "") {
 			const respobj = tokens_pincodewise[addrObj.pincode][0];
-			if (addrObj.state == "" || addrObj.state == null) {
-				console.log("State empty", respobj.state);
-				addrObj.state = respobj.state;
+			if (!!!addrObj.state) {
+				addrObj.state = Address.capitalizeFirstLetter(respobj.state.toString().toLowerCase());
 			}
-			if (addrObj.district == "" || addrObj.district == null) {
-				console.log("District empty", respobj.district);
-				addrObj.district = respobj.district;
+			if (!!!addrObj.district) {
+				addrObj.district = Address.capitalizeFirstLetter(respobj.district);
 			}
-			if (addrObj.subdistrict == "" || addrObj.subdistrict == null) {
-				console.log("Subdistrict empty", respobj.taluka);
-				addrObj.subdistrict = respobj.taluka;
+			if (!!!addrObj.subdistrict) {
+				addrObj.subdistrict = Address.capitalizeFirstLetter(respobj.taluka);
 			}
 		}
 		return addrObj;
 	}
 
+	getAddrString(addrObj) {
+		let arr = [];
+		for (let i in addrObj) {
+			if (!!addrObj[i]) arr.push(addrObj[i]);
+		}
+		return arr.join(', ');
+	}
+
 	getFinalAddress() {
-        // console.log(134, Address.isValidAddress(this.#address));
-		// if (Address.isValidAddress(this.#address)) {
-        this.#address = Address.removeEndCommaAndSpecialChars(
-            this.#address
-        );
+        this.#address = Address.removeEndCommaAndSpecialChars(this.#address);
         this.#address = this.correctSpellingMistakes(this.#address);
         this.#address = this.fillEmpty(this.#address);
         this.#address = this.removeDuplicates(this.#address);
         return this.#address;
-		// } else {
-		// 	throw Error("Invalid incoming address object.");
-		// }
 	}
 
 	getCurrentData() {
