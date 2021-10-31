@@ -1,5 +1,5 @@
 const { FindCorrectWord } = require("./FindCorrectWord");
-const tokens_pincodewise = require("./tokens_pincode_wise.json");
+const tokens_pincodewise = require("./data.json");
 const levenshtein = require("js-levenshtein");
 
 class Address {
@@ -112,26 +112,26 @@ class Address {
 
 	fillEmpty(addrObj) {
 		if (addrObj.pincode != "") {
-			const respobj = tokens_pincodewise[addrObj.pincode];
-
+			const respobj = tokens_pincodewise[addrObj.pincode][0];
+            
 			if (addrObj.state == "" || addrObj.state == null) {
-				console.log("State empty", respobj.State);
-				addrObj.state = respobj.State;
+				console.log("State empty", respobj.state);
+				addrObj.state = respobj.state;
 			}
 			if (addrObj.district == "" || addrObj.district == null) {
-				console.log("District empty", respobj.District);
-				addrObj.district = respobj.District;
+				console.log("District empty", respobj.district);
+				addrObj.district = respobj.district;
 			}
 			if (addrObj.subdistrict == "" || addrObj.subdistrict == null) {
-				console.log("Subdistrict empty", respobj.Division);
-				addrObj.subdistrict = respobj.Division;
+				console.log("Subdistrict empty", respobj.taluka);
+				addrObj.subdistrict = respobj.taluka;
 			}
 		}
 		return addrObj;
 	}
 
 	getFinalAddress() {
-        console.log(134, Address.isValidAddress(this.#address));
+        // console.log(134, Address.isValidAddress(this.#address));
 		// if (Address.isValidAddress(this.#address)) {
         this.#address = Address.removeEndCommaAndSpecialChars(
             this.#address
