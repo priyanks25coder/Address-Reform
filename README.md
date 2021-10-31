@@ -21,33 +21,36 @@ We needed to develop and API that takes address in RAW format (input), and perfo
 
 > Input Address
 
+```
 {
-	"address": {
-		"house": "B-221",
-		"street": "Backery Street",
-		"landmark": "Near GIDC",
-		"subdistrict": "",
-		"district": "Ahmedabad",
-		"village": "",
-		"area": "Naroda",
-		"pincode": "382330",
-		"state": "Gujarat"
-	}
+    "house": "B-221",
+    "street": "Backery Street",
+    "landmark": "Near GIDC",
+    "subdistrict": "",
+    "district": "Ahmedabad",
+    "village": "",
+    "area": "Naroda",
+    "pincode": "382330",
+    "state": "Gujarat"
+
 }
+```
 
 > Output Address
 
+```
 {
   "house": "B-221",
   "street": "Backery Street",
   "area": "Naroda",
   "landmark": "Near GIDC",
-  "village": "",
-  "subdistrict": "Daskroi",
+  "village": "NA",
+  "subdistrict": "NA",
   "district": "Ahmedabad",
   "state": "Gujarat",
   "pincode": "382330"
 }
+```
 
 
 ### How to Run?
