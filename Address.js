@@ -1,4 +1,6 @@
 const { FindCorrectWord } = require('./FindCorrectWord');
+const tokens_pincodewise = require('./tokens_pincode_wise.json')
+const levenshtein=require('js-levenshtein')
 
 class Address {
     
@@ -69,11 +71,62 @@ class Address {
 
         return addrObj;
     }
+
+    removeDuplicates(addrObj){
+        let dict={}
+        dict['district']=addrObj.district
+        dict['subdistrict']=addrObj.subdistrict
+        dict['area']=addrObj.area
+        dict['landmark']=addrObj.landmark
+        dict['village']=addrObj.village    
+        let values=Object.values(dict)
+        let keys=Object.keys(dict)
     
+        count=0
+        keys.forEach((key,i)=>{
+            values.forEach((value,i)=>{
+                if(i!=count){
+                    if(levenshtein(dict[key],value)<=1){
+                        console.log(value+" mathced with "+dict[key])
+                        dict[keys[i]]=""
+                    }
+                }
+                
+            })
+            count++
+        })
+        keys.forEach((key,i)=>{
+            addrObj[key]=dict[key]
+        })
+        return addrObj
+    }
+    
+    fillEmpty(addrObj){
+        if(addrObj.pincode!=""){
+            const respobj=tokens_pincodewise[addrObj.pincode]
+    
+            if(addrObj.state==""||addrObj.state==null){
+                console.log("State empty",respobj.State)
+                addrObj.state=respobj.State
+            }
+            if(addrObj.district==""||addrObj.district==null){
+                console.log("District empty",respobj.District)
+                addrObj.district=respobj.District
+            }
+            if(addrObj.subdistrict==""||addrObj.subdistrict==null){
+                console.log("Subdistrict empty",respobj.Division)
+                addrObj.subdistrict=respobj.Division
+            }
+        }
+        return addrObj
+    }
+
     getFinalAddress() {
         if (Address.isValidAddress(this.#address)) {
             this.#address = Address.removeEndCommaAndSpecialChars(this.#address);
             this.#address = this.correctSpellingMistakes(this.#address);
+            this.#address = this.fillEmpty(this.#address)
+            this.#address = this.removeDuplicates(this.#address)
             return this.#address;
         }
         else {
