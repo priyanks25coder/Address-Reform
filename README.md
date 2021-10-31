@@ -61,7 +61,7 @@ $ npm install
 $ node index.js
 ```
 
-## API Used
+### API Used
 Using an Open Source Indian Post api
 
 **PostOffice Api:** GET https://api.postalpincode.in/pincode/{PINCODE}
